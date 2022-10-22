@@ -26,6 +26,12 @@ func FetchMostPopularVideos() echo.HandlerFunc {
 			Chart("mostPopular").
 			MaxResults(3)
 
+		// クエリパラメータにpageTokenが設定されている場合 、API呼び出し時にPageToken()を使う
+		pageToken := c.QueryParam("pageToken")
+		if len(pageToken) > 0 {
+			call = call.PageToken(pageToken)
+		}
+
 		res, err := call.Do()
 		if err != nil {
 			logrus.Fatalf("error calling YouTube API: %v", err)
