@@ -7,11 +7,12 @@ import (
 	"github.com/valyala/fasthttp"
 	"google.golang.org/api/option"
 	"google.golang.org/api/youtube/v3"
+	"os"
 )
 
 func FetchMostPopularVideos() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		key := "###"
+		key := os.Getenv("API_KEY")
 
 		ctx := context.Background()
 		yts, err := youtube.NewService(ctx, option.WithAPIKey(key))
